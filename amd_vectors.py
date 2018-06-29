@@ -50,7 +50,7 @@ with connection.cursor() as cursor:
         groupes[int(l['amendement_id'])] = set(l['groupes'].split(',')) 
 
 
-    cursor.execute(""" SELECT id, sort, count(*) as duplicates, signataires, legislature, LENGTH(texte) as text_ln, LENGTH(expose) as expose_ln from amendement WHERE sort !='rejeté' GROUP BY content_md5""")
+    cursor.execute(""" SELECT id, sort, count(*) as duplicates, auteur_groupe_acronyme, signataires, legislature, COALESCE(LENGTH(texte),0) as text_ln, COALESCE(LENGTH(expose),0) as expose_ln from amendement WHERE sort !='rejeté' GROUP BY content_md5""")
     
     amds = {}
     for amendement in cursor:
@@ -68,13 +68,15 @@ with connection.cursor() as cursor:
             print("unknown signataires for %s : '%s'"%(amendement_id, amendement['signataires']))
         # majorité
         if amendement_id in groupes:
-            majorite = len(groupes[amendement_id] - set(groupe_majorite[int(amendement['legislature'])]) )==0 and len(groupes[amendement_id] & set(groupe_majorite[int(amendement['legislature'])]))>0
+            majorite_in_groupe = len(groupes[amendement_id] & set(groupe_majorite[int(amendement['legislature'])]))>0
+            only_majorite = len(groupes[amendement_id] - set(groupe_majorite[int(amendement['legislature'])]) )==0
+            amds[amendement_id]['majorite_opposition']= 'majorité' if majorite_in_groupe and only_majorite else 'mixte' if majorite_in_groupe else 'opposition'
             # groupes
             amds[amendement_id]['groupes'] = ",".join(sorted(groupes[amendement_id]))
         else:
             majorite = True
             amds[amendement_id]['groupes'] = "gouvernement"
-        amds[amendement_id]['majorite'] = majorite
+            amds[amendement_id]['majorite_opposition'] = 'gouvernement'
         
 
         # baaaa durty
