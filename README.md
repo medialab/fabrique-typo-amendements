@@ -12,10 +12,10 @@ La typologie des amendements sera contruite sur la base de profils d'amendements
 x statut 
 x nb auteur
 x doublon
-x concurrence 
+x concurrence
 x majorité
 x type de premier auteur
-	x gouvernement ddans signataire
+	x gouvernement dans signataire
 	x président ou présidente de groupe : parlementaire_organismes dont organisme est de type groupe
 x analyses bigrames des exposés des motifs
     x tf/idf par groupe
@@ -50,9 +50,10 @@ Amendements proposant des petites modifications techniques n'impactant pas l'esp
 Amendements visant à faire entendre une très forte opposition sur un texte et à faire durer le débat afin de mobiliser l'opinion.
 
 - critères de sélection
-    + grand nombre de doublons floux
+    + grand nombre de doublons flous
     + opposition 
     + beaucoup de concurrence
+    + motif court ou similaire
 
 - profil quantitatif attendu
     - systématiquement rejeté
@@ -62,7 +63,7 @@ Amendements visant à faire entendre une très forte opposition sur un texte et 
 Amendements rédigés par un lobby et repris par un.des parlementaire.s.
 
 - critères de sélection
-    + petit nombre de texte doublons floux
+    + petit nombre de texte doublons flous
     + motif différent
 
 - profil quantitatif attendu
@@ -82,9 +83,9 @@ Amendement d'appel et amendement non appelé "d'appel" mais ressemblant. On cher
 
 ### amendements de consensus
 - critères de sélection
-    + nombre de doublons floux sur le texte
+    + nombre de doublons flous sur le texte
     + exposé des motifs différents
-- profile
+- profil
     + beaucoup de groupes
     + attention risque de recouvrement avec le lobbying
 
@@ -93,7 +94,7 @@ Amendement d'appel et amendement non appelé "d'appel" mais ressemblant. On cher
 - critères de sélection
 Tous les autres amendements
 
-- profile
+- profil
     - plutôt adopté
     - majoritaire
     - pas de doublon
