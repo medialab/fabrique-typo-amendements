@@ -49,8 +49,13 @@ with connection.cursor() as cursor:
         presidents[int(l['amendement_id'])] = president_groupe[int(ss[0])] if int(ss[0]) in president_groupe else None
         groupes[int(l['amendement_id'])] = set(l['groupes'].split(',')) 
 
+    # dossier loi
+    cursor.execute(""" SELECT t.id_dossier_an, a.id as amendement_id   from texteloi as t JOIN amendement as a ON t.id=a.texteloi_id""")
+    ids_dossier_an = {c["amendement_id"]:c["id_dossier_an"] for c in cursor}
 
-    cursor.execute(""" SELECT id, sort, count(*) as duplicates, auteur_groupe_acronyme, signataires, legislature, COALESCE(LENGTH(texte),0) as text_ln, COALESCE(LENGTH(expose),0) as expose_ln from amendement WHERE sort !='rejeté' GROUP BY content_md5""")
+
+    # amendements
+    cursor.execute(""" SELECT id, sort, count(*) as duplicates, auteur_groupe_acronyme, signataires, legislature, texte, COALESCE(LENGTH(texte),0) as text_ln, COALESCE(LENGTH(expose),0) as expose_ln, expose from amendement WHERE sort !='rejeté' GROUP BY content_md5""")
     
     amds = {}
     for amendement in cursor:
@@ -78,7 +83,8 @@ with connection.cursor() as cursor:
             amds[amendement_id]['groupes'] = "gouvernement"
             amds[amendement_id]['majorite_opposition'] = 'gouvernement'
         
-
+        amds[amendement_id]['id_dossier_an']=ids_dossier_an[amendement_id] if amendement_id in ids_dossier_an else None
+        
         # baaaa durty
         headers = amds[amendement_id]
 
