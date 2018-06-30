@@ -55,7 +55,7 @@ with connection.cursor() as cursor:
 
 
     # amendements
-    cursor.execute(""" SELECT id, sort, count(*) as duplicates, auteur_groupe_acronyme, signataires, legislature, texte, COALESCE(LENGTH(texte),0) as text_ln, COALESCE(LENGTH(expose),0) as expose_ln, expose from amendement WHERE sort !='rejeté' GROUP BY content_md5""")
+    cursor.execute(""" SELECT id, sort, count(*) as duplicates, texteloi_id, auteur_groupe_acronyme, signataires, legislature, texte, COALESCE(LENGTH(texte),0) as text_ln, COALESCE(LENGTH(expose),0) as expose_ln, expose from amendement WHERE sort !='rectifié' GROUP BY content_md5""")
     
     amds = {}
     for amendement in cursor:
