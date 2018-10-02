@@ -9,17 +9,18 @@ Pour le moment, seuls les amendements de l'Assemblée Nationale de la quinzième
 ## variable par amendement
 
 La typologie des amendements sera contruite sur la base de profils d'amendements contenant ces variables : 
-x statut 
-x nb auteur
-x doublon
-x concurrence
-x majorité
-x type de premier auteur
-	x gouvernement dans signataire
-	x président ou présidente de groupe : parlementaire_organismes dont organisme est de type groupe
-x analyses bigrames des exposés des motifs
-    x tf/idf par groupe
-    x catégorisation à la main des 1000 bigrammes les plus fréquents
+
+- statut 
+- nb auteur
+- doublon
+- concurrence
+- majorité
+- type de premier auteur
+	- gouvernement dans signataire
+	- président ou présidente de groupe : parlementaire_organismes dont organisme est de type groupe
+- analyses bigrames des exposés des motifs
+    - tf/idf par groupe
+    - catégorisation à la main des 1000 bigrammes les plus fréquents
 
 Variables qu'on pourrait/devrait rajouter
 - Doublons flous : On calcule une mesure de similarité entre les textes et les exposés entre chaque paire d'amendements par sujet et par lecture. On construit un réseau en filtrant les liens peu similaire. on ajoute au vecteur d'amendement le nombre de doublons flous comme le degré des noeuds dans le réseau
